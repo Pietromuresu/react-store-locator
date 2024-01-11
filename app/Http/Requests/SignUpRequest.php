@@ -30,6 +30,7 @@ class SignUpRequest extends FormRequest
             [
                 'required',
                 'min:8',
+                'confirmed'
             ]
         ];
     }
