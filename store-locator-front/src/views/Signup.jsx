@@ -27,8 +27,9 @@ export default function Signup(){
             })
             .catch(err =>{
                 const response = err.response;
+                console.log(response);
                 if(response && response.status === 422){
-                    console.log(response.data.errors);
+                    console.log(response.data);
                 }
             })
     }

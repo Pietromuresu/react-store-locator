@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request\LoginRequest;
-use Illuminate\Http\Request\SignUpRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -16,10 +16,10 @@ class AuthController extends Controller
 
         $data = $request->validated();
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
         /** @var User $user */
         $token = $user->createToken('main')->plainTextToken;
 
