@@ -32,9 +32,7 @@ export default function Signup(){
                 const response = err.response;
                 console.log(response);
                 if(response && response.status === 422){
-                    console.log(response.data);
                     setErrors(response.data.errors);
-                    console.log(errors);
                 }
             })
     }
