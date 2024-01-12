@@ -1,13 +1,16 @@
-import { useRef, Ref } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
+
 
 export default function Signup(){
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmationRef = useRef();
+
+    const [errors, setErrors] = useState(null);
 
     const {setUser, setToken} = useStateContext();
 
@@ -30,6 +33,8 @@ export default function Signup(){
                 console.log(response);
                 if(response && response.status === 422){
                     console.log(response.data);
+                    setErrors(response.data.errors);
+                    console.log(errors);
                 }
             })
     }
@@ -42,8 +47,28 @@ export default function Signup(){
                 </h1>
                 <form onSubmit={onSubmit}>
                     <input ref={nameRef} type="text" placeholder="Full name" />
+                    {errors &&(
+                        errors.name &&
+                         <div className="alert">
+                            <p>{errors.name}</p>
+                        </div>)
+                    }
                     <input ref={emailRef} type="email" placeholder="Email" />
+                    {errors && (
+                        errors.email &&
+                        <div className="alert">
+                            <p>{errors.email}</p>
+                        </div>
+                        )
+                    }
                     <input ref={passwordRef} type="password" placeholder="Password" />
+                    {errors &&
+                        (errors.password &&
+                        <div className="alert">
+                            <p>{errors.password}</p>
+                        </div>
+                        )
+                    }
                     <input ref={passwordConfirmationRef} type="password" placeholder="Password confirmation" />
                     <button className="btn btn-block">
                         Login
