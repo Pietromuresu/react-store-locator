@@ -17,3 +17,7 @@ Il candidato dovrà fornire una soluzione completa, insieme ad una breve documen
 - note su come potrebbe essere migliorato il progetto avendo a disposizione più tempo rispetto a quello concesso
 
 Non vi sono limitazioni né raccomandazioni riguardo le tecnologie frontend da utilizzare. Per il backend, invece, si chiede al candidato di utilizzare Laravel.
+
+<img src="readme-imgs/brief-dojo-diagrammaER.jpg">
+
+
