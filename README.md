@@ -20,4 +20,4 @@ Non vi sono limitazioni né raccomandazioni riguardo le tecnologie frontend da u
 
 <img src="readme-imgs/brief-dojo-diagrammaER.jpg">
 
-
+employee is related to stores in a one to many because in this app the employees sono visti come "manager" quindi un manager può avere più store ma uno store può avere un solo manager
