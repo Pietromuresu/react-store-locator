@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
@@ -26,25 +29,33 @@ class AuthController extends Controller
         return response(compact('user', 'token'));
     }
 
+
     public function login(LoginRequest $request){
+
         $credentials = $request->validated();
         if(!Auth::attempt($credentials)){
             return response([
                 'message' => 'Provided email address or password is incorrect'
             ]);
         }
+
+
         /** @var User $user */
         $user = Auth::user();
-        $user->createToken('main')->plainTextToken;
+        $token = $user->createToken('main')->plainTextToken;
 
         return response(compact('user', 'token'));
 
     }
 
-    public function logout(){
+    public function logout(Request $request){
         /** @var User $user */
         $user = $request->user();
         $user->currentAccessToken()->delete();
-        return response('', 204);
+        $response = [
+            "status" => 204,
+            "message" => "Logged Out successfully"
+        ];
+        return response(compact('response'));
     }
 }

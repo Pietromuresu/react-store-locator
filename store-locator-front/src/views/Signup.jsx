@@ -9,10 +9,8 @@ export default function Signup(){
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmationRef = useRef();
-
-    const [errors, setErrors] = useState(null);
-
     const {setUser, setToken} = useStateContext();
+    const [errors, setErrors] = useState(null);
 
     const onSubmit = (e) =>{
         e.preventDefault();
@@ -25,12 +23,12 @@ export default function Signup(){
         }
         axiosClient.post('/signup', payload)
             .then(({data}) =>{
-                setUser(data.user);
                 setToken(data.token);
+                setUser(data.user);
+
             })
             .catch(err =>{
                 const response = err.response;
-                console.log(response);
                 if(response && response.status === 422){
                     setErrors(response.data.errors);
                 }

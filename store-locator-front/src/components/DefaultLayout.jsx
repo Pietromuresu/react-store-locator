@@ -1,18 +1,35 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { ContextProvider, useStateContext } from "../contexts/ContextProvider";
+import axiosClient from "../axios-client";
+import { useEffect, useState } from "react";
+
+
 
 export default function DefaultLayout(){
 
-    const {user, token} =  useStateContext();
-    // Se l'utente non è loggato fallo loggare per non arrivare a dati protetti
+    const {user, token, setUser, setToken} =  useStateContext();
 
+
+    // Se l'utente non è loggato fallo loggare per non arrivare a dati protetti
 
     if(!token){
         return <Navigate to={"/login"} />
     }
 
-    const onLogout = (e) =>{
+    // Richiamo i dati dello user loggato dall'api di laravel
+    useEffect(( ) =>{
+        axiosClient.get('/user')
+                .then(({data}) =>{
+                    setUser(data);
+                })
+            },[])
 
+            const onLogout = (e) =>{
+                axiosClient.post('/logout')
+                .then(({data}) => {
+                    setUser({});
+                    setToken(null);
+                })
     }
 
     return(
