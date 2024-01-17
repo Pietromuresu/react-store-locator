@@ -20,7 +20,7 @@ return new class extends Migration
                   ->onDelete('set null');
             $table->string("city", 55);
             $table->string("address");
-            $table->string("zip_code");
+            $table->smallInteger("zip_code");
             $table->string("state");
             $table->point("long");
             $table->point("lat");
