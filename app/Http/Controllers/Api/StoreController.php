@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateStoreRequest;
 use App\Models\Store;
 use App\Http\Resources\StoreResource;
 
+use App\Helpers\CustomHelper;
+use Illuminate\Support\Facades\DB;
+
+
 class StoreController extends Controller
 {
     /**
@@ -28,9 +32,16 @@ class StoreController extends Controller
      */
     public function store(StoreStoreRequest $request)
     {
-        $data = $request->validated();
 
-        $store = Store::create($data);
+        $request['hours'] = $request['opening'] . ' - ' . $request['closing'];
+        $validatedData = $request->validated();
+
+        $validatedData['hours'] = $request['hours'];
+        $coordinates = DB::raw("(ST_GeomFromText('POINT(".CustomHelper::getCoordinates($request['address']). ")'))");
+
+        $validatedData['coordinates'] = $coordinates;
+        $store = Store::create($validatedData);
+
         return response(new StoreResource($store), 201);
     }
 
@@ -47,8 +58,16 @@ class StoreController extends Controller
      */
     public function update(UpdateStoreRequest $request, Store $store)
     {
+        $request['hours'] = $request['opening'] . ' - ' . $request['closing'];
+        if($request->address != $store["address"]){
+            $coordinates = "ST_GeomFromText('POINT(" . CustomHelper::getCoordinates($request['address']) . ")')";
+            $request["coordinates"] = $coordinates;
+        }
+
         $data = $request->validated();
+        $data['hours'] = $request['hours'];
         $store->update($data);
+
 
         return new StoreResource($store);
     }

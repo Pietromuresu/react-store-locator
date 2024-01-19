@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Store;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\CustomHelper;
 
 
 class StoresTableSeeder extends Seeder
@@ -21,11 +22,10 @@ class StoresTableSeeder extends Seeder
             Store::factory()->create([
                 'employee_id' => '1',
                 'city' => 'città',
-                'address' => 'sassaru',
+                'address' => 'sassari',
                 'zip_code' => '4234',
                 'state' => 'Sassaru',
-                'long' => DB::raw("ST_GeomFromText('POINT(01 0)',0)"),
-                'lat' =>  DB::raw("ST_GeomFromText('POINT(01 0)',0)"),
+                'coordinates' => DB::raw("ST_GeomFromText('POINT(" . CustomHelper::getCoordinates('sassari') . ")')"),
                 'hours' => '453',
                 'phone' => '5345324',
             ]);

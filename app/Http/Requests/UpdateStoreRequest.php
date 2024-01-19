@@ -26,7 +26,7 @@ class UpdateStoreRequest extends FormRequest
             "address" => "required|max:255",
             "zip_code" => "required|numeric",
             "state" => "required|max:255",
-            "hours" => "required|numeric",
+            "hours" => "required|max:255",
             "phone" => "required|max:10",
             "active" => "required|boolean"
         ];

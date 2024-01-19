@@ -1,0 +1,15 @@
+#stores-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.radio{
+    width: min-content;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.d-flex{
+    display: flex;
+}

@@ -1,5 +1,8 @@
 import axios from "axios";
 
+// GOOGLE MAPS KEY : AIzaSyCXGkJs4aXBbWd5MYuZvZTmopfrxoK1l5I
+
+
 const axiosClient = axios.create({
     baseURL: `${import.meta.env.VITE_APP_BASE_URL}/api`
 })
@@ -26,3 +29,10 @@ axiosClient.interceptors.response.use((response) =>{
 
 export default axiosClient;
 
+
+
+/**
+ *
+ *
+ *
+ */

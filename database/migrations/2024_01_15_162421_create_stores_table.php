@@ -22,9 +22,8 @@ return new class extends Migration
             $table->string("address");
             $table->smallInteger("zip_code");
             $table->string("state");
-            $table->point("long");
-            $table->point("lat");
-            $table->integer("hours");
+            $table->point("coordinates");
+            $table->string("hours");
             $table->string("phone");
             $table->boolean("active")->default(0);
             $table->timestamps();

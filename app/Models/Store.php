@@ -16,9 +16,8 @@ class Store extends Model
         "address",
         "zip_code",
         "state",
-        "long",
-        "lat",
         "hours",
+        "coordinates",
         "phone",
         "active"
     ];

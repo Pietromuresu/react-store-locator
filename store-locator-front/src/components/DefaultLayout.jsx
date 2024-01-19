@@ -49,10 +49,10 @@ export default function DefaultLayout(){
                     </div>
                 </header>
 
+                <main>
+                    <Outlet />
+                </main>
             </div>
-            <main>
-                <Outlet />
-            </main>
         </div>
     )
 }
