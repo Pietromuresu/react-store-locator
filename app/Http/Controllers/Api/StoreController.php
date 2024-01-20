@@ -33,7 +33,7 @@ class StoreController extends Controller
     public function store(StoreStoreRequest $request)
     {
 
-        $request['hours'] = $request['opening'] . ' - ' . $request['closing'];
+
         $validatedData = $request->validated();
 
         $validatedData['hours'] = $request['hours'];
@@ -58,7 +58,7 @@ class StoreController extends Controller
      */
     public function update(UpdateStoreRequest $request, Store $store)
     {
-        $request['hours'] = $request['opening'] . ' - ' . $request['closing'];
+
         if($request->address != $store["address"]){
             $coordinates = "ST_GeomFromText('POINT(" . CustomHelper::getCoordinates($request['address']) . ")')";
             $request["coordinates"] = $coordinates;

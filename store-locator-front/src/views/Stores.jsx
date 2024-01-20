@@ -55,6 +55,7 @@ export default function Stores(){
                             <th>State</th>
                             <th>Zip code</th>
                             <th>Phone</th>
+                            <th>Hours</th>
                             <th>Active</th>
                         </tr>
                     </thead>
@@ -78,6 +79,7 @@ export default function Stores(){
                                 <td>{store.state}</td>
                                 <td>{store.zip_code}</td>
                                 <td>{store.phone}</td>
+                                <td>{store.hours}</td>
                                 <td>{store.active}</td>
                                 <td>
                                     <Link className="btn-edit" to={"/stores/"+store.id} key={'updateStore'}>Modify</Link>

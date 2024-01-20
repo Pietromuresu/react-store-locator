@@ -27,7 +27,7 @@ class StoreStoreRequest extends FormRequest
             "phone" => "required|max:10",
             "zip_code" => "required|numeric",
             "state" => "required|max:255",
-            "hours" => "max:255",
+            "hours" => "required",
             "coordinates" => "min:3",
             "active" => "required|boolean"
         ];

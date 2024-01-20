@@ -17,12 +17,14 @@ export default function StoreForm(){
         city: '',
         state: '',
         zip_code: '',
-        opening: '',
-        closing: '',
+        hours: '',
         phone: '',
         active: 0
     })
+    const [opening, setOpening] = useState(undefined);
+    const [closing, setClosing] = useState(undefined);
 
+    // TODO : collegare hours e cambiarlo dal controller in modo che quando lo invio è gia una stringa e non debba farlo server side ma lo faccia sul client quindi usare opening e closing come valori per gli input e valorizzarlo con hours e lo split "store.hours.split(' - ')"
     if(id){
 
         useEffect(()=>{
@@ -31,17 +33,27 @@ export default function StoreForm(){
                     .then(({data}) => {
                         setLoading(false);
                         setStore(data.data);
+                        setOpening(store.hours.split(' - ')[0]);
+                        setClosing(store.hours.split(' - ')[1]);
                     })
                     .catch(err =>{
-                        setErrors(err);
+
                         setLoading(false);
                     })
-        }, [id])
+        }, [id, store.hours])
     }
 
     const onSubmit = (e) =>{
         e.preventDefault();
-
+        if(opening != undefined && closing != undefined){
+            if(new Date(`2023-12-1 ` + opening) > new Date(`2023-12-1 ` + closing)){
+                return setErrors({...errors, hours: "Opening must be before closing"})
+            }else{
+                store.hours = opening + " - " + closing;
+            }
+        }else{
+            store.hours = null;
+        }
         if(store.id){
             axiosClient.put(`/stores/${store.id}`, store)
                     .then(() =>{
@@ -51,8 +63,9 @@ export default function StoreForm(){
                     .catch(err =>{
                         const response = err.response;
                         console.log(response);
+                        setErrors(response.data.errors);
                         if(response && response.status === 422){
-                            setErrors(response.data.errors);
+                            console.log(errors);
                         }
                     })
         }else {
@@ -65,7 +78,7 @@ export default function StoreForm(){
             })
             .catch(err =>{
                 const response = err.response;
-                console.log(response);
+
                 if(response && response.status === 422){
                     setErrors(response.data.errors);
                 }
@@ -112,7 +125,7 @@ export default function StoreForm(){
                         {errors && (
                             errors.city &&
                             <div className="alert">
-                                <p>{errors.city}</p>
+                                <p>{errors.city[0]}</p>
                             </div>
                             )
                         }
@@ -136,43 +149,33 @@ export default function StoreForm(){
                         <div className="d-flex">
                             <div>
 
-                            <label htmlFor="opening"><strong>Opening</strong></label>
-                                <input
-                                type="time"
-                                id="opening"
-                                value={store.opening}
-                                onChange={ev =>
-                                    setStore({...store,
-                                        opening:
-                                        ev.target.value})} />
-                                {errors && (
-                                    errors.opening &&
-                                    <div className="alert">
-                                        <p>{errors.opening}</p>
-                                    </div>
-                                    )
-                                }
-                                </div>
-                                <div>
+                                <label htmlFor="opening"><strong>Opening</strong></label>
+                                    <input
+                                    type="time"
+                                    id="opening"
+                                    value={opening}
+                                    onChange={ev =>
+                                        setOpening(ev.target.value)} />
+                            </div>
+                            <div>
 
                                 <label htmlFor="closing"><strong>Closing</strong></label>
                                 <input
                                 type="time"
                                 id="closing"
-                                value={store.closing}
+                                value={closing}
                                 onChange={ev =>
-                                    setStore({...store,
-                                        closing:
-                                        ev.target.value})} />
-                                {errors && (
-                                    errors.closing &&
+                                    setClosing(ev.target.value)} />
+
+                            </div>
+                        </div>
+                            {errors && (
+                                    errors.hours &&
                                     <div className="alert">
-                                        <p>{errors.closing}</p>
+                                        <p>{errors.hours}</p>
                                     </div>
                                     )
                                 }
-                                </div>
-                        </div>
 
                         <label htmlFor="zip_code"><strong>Zip code</strong></label>
                         <input
